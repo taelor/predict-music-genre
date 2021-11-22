@@ -1,16 +1,11 @@
-install.packages("readr")
+
 install.packages("e1071")
 
-library(readr)
 library(e1071)
 
-#data <- read_csv("/Users/taylorredden/Desktop/csc 3220/Project/music_genre.csv",
-#  col_select= c(acousticness, danceability, energy, instrumentalness, liveness, speechiness, valence, music_genre)
-#)
+data <- read.csv("data/music_genre.csv")
 
-data <- read.csv("/Users/taylorredden/Desktop/csc 3220/Project/music_genre.csv")
-
-data <- na.omit(data)
+data <- cleanData(data)
 
 good_duration <- data[data$duration_ms != -1, ]
 
@@ -49,9 +44,9 @@ train_data <- data[train_indexes,]
 test_data <- data[-train_indexes,]
 
 model <- svm(music_genre ~ ., data = train_data,
-  method="C-classification", 
-  kernel="radial",
-  cost=100
+             method="C-classification", 
+             kernel="radial",
+             cost=100
 )
 
 print(model)
